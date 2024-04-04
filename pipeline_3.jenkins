@@ -10,11 +10,11 @@ pipeline {
       }
       stage('List') {
         steps{      
-          bat("dir /B ${JENKINS_HOME}")
+          echo 'Removed windows batch script from here'
         }
 
 
-        }
+      }
 
    stage('Test') {
      steps {
