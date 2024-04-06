@@ -23,6 +23,7 @@ pipeline {
           }
           echo 'Installing python modules...'
           sh "cd ${JENKINS_HOME}/workspace/${env.JOB_NAME}/"
+          sh "pwd"
           sh "python3 -m pip install -r requirements.txt"
         }
       }
