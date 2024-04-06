@@ -11,8 +11,15 @@ pipeline {
           sh 'python3 --version'
           echo "Create python venv"
           sh 'apt install -y python3.11-venv'
-          sh 'python3 -m venv /usr/venv'
-          sh 'source /usr/venv/bin/activate'
+          sh 'python3 -m venv /usr/testing_venv'
+          script {
+            try {
+              sh 'source /usr/testing_venv/bin/activate'
+            }
+            except {
+              sh '. /usr/testing_venv/bin/activate'
+            }
+          }
           echo 'Installing python modules...'
           sh 'python3 -m pip install -r requirements.txt'
         }
