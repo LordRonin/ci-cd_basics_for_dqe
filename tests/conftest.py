@@ -8,8 +8,9 @@ def mssql_connection():
     database = 'AdventureWorks2012'
     login = 'TestLogin'
     password = '!password12345'
+    port = 1433
 
-    conn = pymssql.connect(server, login, password, database)
+    conn = pymssql.connect(server, login, password, database, port=1433)
     # Yield database connection object to query database.
     yield conn
 
