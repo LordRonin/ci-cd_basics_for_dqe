@@ -6,6 +6,10 @@ pipeline {
         steps {
           echo 'Building...'
           echo "Running ${env.BUILD_ID} ${env.BUILD_DISPLAY_NAME} on ${env.NODE_NAME} and JOB ${env.JOB_NAME}"
+          echo 'Download python standalone zip pip module'
+          sh('wget https://bootstrap.pypa.io/pip/pip.pyz')
+          echo 'install pip'
+          python -m pip.pyz --help
           echo 'Installing python modules...'
           sh('python3 -m pip install -r requirements.txt')
         }
