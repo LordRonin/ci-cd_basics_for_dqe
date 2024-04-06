@@ -29,16 +29,15 @@ pipeline {
       }
       stage('List') {
         steps{      
-          sh "dir ${JENKINS_HOME}"
+          echo 'list stage'
+          //sh "dir ${JENKINS_HOME}"
         }
-
-
       }
 
    stage('Test') {
      steps {
         echo 'Testing...'
-        python3 pytest
+        sh 'python3 pytest'
      }
    }
    stage('Deploy') {
