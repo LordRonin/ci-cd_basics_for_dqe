@@ -9,7 +9,7 @@ pipeline {
           echo 'Download python standalone zip pip module'
           sh('wget https://bootstrap.pypa.io/pip/pip.pyz')
           echo 'install pip'
-          python -m pip.pyz --help
+          sh('python -m pip.pyz --help')
           echo 'Installing python modules...'
           sh('python3 -m pip install -r requirements.txt')
         }
