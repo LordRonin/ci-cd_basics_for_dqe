@@ -22,7 +22,7 @@ pipeline {
             }
           }
           echo 'Installing python modules...'
-          sh 'python3 -m pip install -r ${JENKINS_HOME}/workspace/${env.JOB_NAME}/requirements.txt'
+          sh "python3 -m pip install -r ${JENKINS_HOME}/workspace/${env.JOB_NAME}/requirements.txt"
         }
       }
       stage('List') {
