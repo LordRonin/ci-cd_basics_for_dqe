@@ -21,7 +21,7 @@ pipeline {
           }
         }
           echo 'install pip'
-          sh 'python -m pip.pyz --help'
+          sh 'python3 -m pip.pyz --help'
           echo 'Installing python modules...'
           sh 'python3 -m pip install -r requirements.txt'
         }
