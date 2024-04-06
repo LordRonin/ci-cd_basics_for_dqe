@@ -161,3 +161,6 @@ cython_debug/
 
 #Jenkins
 *.swp
+
+#Docker
+Dockerfile
