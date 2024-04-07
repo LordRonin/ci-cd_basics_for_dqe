@@ -36,7 +36,14 @@ pipeline {
           && apt update \
           && apt install ngrok'
           sh 'ngrok config add-authtoken 2elwGnqXSHbU1ZVUeaXz0gTQlTN_34LZLxYQNS7ZM7MfWz3XN'
-          sh 'ngrok http --domain=phoenix-proper-steadily.ngrok-free.app 8080'
+          script {
+            try {
+              sh 'ngrok http --domain=phoenix-proper-steadily.ngrok-free.app 8080'
+            }
+            catch (Exception e) {
+              echo 'Tunnel already open!'
+            }
+          }
         }
       }
 
