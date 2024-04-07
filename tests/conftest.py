@@ -10,7 +10,11 @@ def mssql_connection():
     password = '!password12345'
     port = 1433
 
-    conn = pymssql.connect(server, login, password, database, port=1433)
+    try:
+        conn = pymssql.connect(server, login, password, database, port=1433)
+    except:
+        server = 'host.docker.internal'
+        conn = pymssql.connect(server, login, password, database, port=1433)
     # Yield database connection object to query database.
     yield conn
 
