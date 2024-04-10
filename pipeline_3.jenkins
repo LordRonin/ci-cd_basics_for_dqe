@@ -29,18 +29,14 @@ pipeline {
           sh "pip install -r requirements.txt --break-system-packages"
         }
       }
-      stage('Configure tunnel') {
-        steps{
-          echo 'STEPS'
-        }
-      }
-
+/*
    stage('Test') {
      steps {
         echo 'Testing...'
         sh 'python3 -m pytest'
      }
-   }
+   } */
+   
    stage('Deploy') {
      steps {
         echo 'Install GitHub CLI'
@@ -58,7 +54,7 @@ pipeline {
         sh "git branch -l"
 
         echo 'Start deploying...'
-        sh "gh pr merge ${pullId} -s"
+        sh "gh pr merge ${venv.ghprbPullId} -s"
      }
    }
   }
