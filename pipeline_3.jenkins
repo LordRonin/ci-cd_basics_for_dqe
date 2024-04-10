@@ -58,7 +58,7 @@ pipeline {
         sh "git branch -l"
 
         echo 'Start deploying...'
-        sh "gh pr merge ${venv.pullId} -s"
+        sh "gh pr merge $ghprbPullId -s"
      }
    }
   }
