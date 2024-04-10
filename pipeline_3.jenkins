@@ -58,10 +58,10 @@ pipeline {
       echo 'Merging branches...'
       sh "gh pr merge $ghprbPullId -m"
     }
-/*
+
     unsuccessful {
       echo 'Close failed pull request'
       sh "gh pr close $ghprbPullId -c 'Build Failed.'"
-    } */
+    }
   }
 } 
