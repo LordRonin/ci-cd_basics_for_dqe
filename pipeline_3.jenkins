@@ -55,6 +55,8 @@ pipeline {
         echo 'Authenticate with PAT'
         sh "gh auth login --with-token < /var/jenkins_home/pat.txt"
 
+        sh "git branch -l"
+
         echo 'Start deploying...'
         sh "gh pr merge -s"
      }
