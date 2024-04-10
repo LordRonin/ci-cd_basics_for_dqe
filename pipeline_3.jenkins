@@ -15,6 +15,7 @@ pipeline {
 
           echo "Create and activate virtual environment"
           sh "cd ${JENKINS_HOME}/workspace/${env.JOB_NAME}/"
+          sh 'git log'
           sh 'python3 -m venv /usr/testing_venv'
           script {
             try {
