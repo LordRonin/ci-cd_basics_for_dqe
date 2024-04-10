@@ -56,7 +56,7 @@ pipeline {
         sh "gh auth login --with-token < /var/jenkins_home/pat.txt"
 
         echo 'Start deploying...'
-        sh "gh pr merge $pullId -ms"
+        sh "gh pr merge -s"
      }
    }
   }
