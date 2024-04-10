@@ -5,13 +5,16 @@ pipeline {
       stage('Build') {
         
         steps {
-          sh 'dir ${JENKINS_HOME}'
           echo 'Building...'
           echo "Running ${env.BUILD_ID} ${env.BUILD_DISPLAY_NAME} on ${env.NODE_NAME} and JOB ${env.JOB_NAME}"
+          
           echo "Verifying python version"
           sh 'python3 --version'
           echo "Create python venv"
-          sh 'apt install -y python3.11-venv'
+          sh 'apt-get install -y python3.11-venv'
+
+          echo "Create and activate virtual environment"
+          sh "cd ${JENKINS_HOME}/workspace/${env.JOB_NAME}/"
           sh 'python3 -m venv /usr/testing_venv'
           script {
             try {
@@ -21,9 +24,8 @@ pipeline {
               sh '. /usr/testing_venv/bin/activate'
             }
           }
-          echo 'Installing python modules...'
-          sh "cd ${JENKINS_HOME}/workspace/${env.JOB_NAME}/"
-          sh "pwd"
+
+          echo 'Install required python modules.'
           sh "pip install -r requirements.txt --break-system-packages"
         }
       }
