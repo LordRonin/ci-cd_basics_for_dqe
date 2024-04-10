@@ -6,7 +6,7 @@ def test_data_in_table_exists(mssql_connection):
         cursor.execute('SELECT COUNT(*) FROM Person.Address')
         rows_count = cursor.fetchone()[0]
 
-    assert rows_count > 10, 'Table is empty.'
+    assert rows_count < 0, 'Table is empty.'
 
 
 def test_valid_state_province_id(mssql_connection):
