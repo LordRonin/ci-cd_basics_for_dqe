@@ -15,7 +15,6 @@ pipeline {
 
           echo "Create and activate virtual environment"
           sh "cd ${JENKINS_HOME}/workspace/${env.JOB_NAME}/"
-          sh 'git log'
           sh 'python3 -m venv /usr/testing_venv'
           script {
             try {
@@ -45,6 +44,8 @@ pipeline {
    stage('Deploy') {
      steps {
         echo 'Install GitHub CLI'
+        sh 'apt-get wget'
+
         sh 'mkdir -p -m 755 /etc/apt/keyrings && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
         && chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
         && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
@@ -52,7 +53,7 @@ pipeline {
         && apt install gh -y'
 
         echo 'Authenticate with PAT'
-        sh "gh auth login --with-token < /usr/github_pat.txt"
+        sh "gh auth login --with-token < /var/jenkins_home/pat.txt"
 
         echo 'Start deploying...'
         sh "gh pr merge $pullId -ms"
