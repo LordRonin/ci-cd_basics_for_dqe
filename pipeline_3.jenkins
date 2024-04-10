@@ -13,7 +13,7 @@ pipeline {
         echo "Verifying python version"
         sh 'python3 --version'
         echo "Create python venv"
-        ah 'apt-get install -y python3.11-venv'
+        sh 'apt-get install -y python3.11-venv'
 
         echo "Create and activate virtual environment"
         sh "cd ${JENKINS_HOME}/workspace/${env.JOB_NAME}/"
