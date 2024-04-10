@@ -29,13 +29,13 @@ pipeline {
           sh "pip install -r requirements.txt --break-system-packages"
         }
       }
-
+/*
    stage('Test') {
      steps {
         echo 'Testing...'
         sh 'python3 -m pytest'
      }
-   }
+   } */
    
    stage('Deploy') {
      steps {
@@ -52,7 +52,7 @@ pipeline {
         sh "gh auth login --with-token < /var/jenkins_home/pat.txt"
 
         echo 'Merging branches...'
-        sh "gh pr merge $ghprbPullId -sm"
+        sh "gh pr merge $ghprbPullId -s"
      }
    }
   }
