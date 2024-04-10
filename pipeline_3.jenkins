@@ -8,33 +8,35 @@ pipeline {
         echo 'Building...'
         echo "Running ${env.BUILD_ID} ${env.BUILD_DISPLAY_NAME} on ${env.NODE_NAME} and JOB ${env.JOB_NAME}"
         
+        echo 'switch to bash shell'
+        sh 'bash'
         echo "Verifying python version"
-        babash 'python3 --version'
-        echo "Create python venv"
-        babash 'apt-get install -y python3.11-venv'
+        sh 'python3 --version'
+        sh "Create python venv"
+        bash 'apt-get install -y python3.11-venv'
 
         echo "Create and activate virtual environment"
-        bash "cd ${JENKINS_HOME}/workspace/${env.JOB_NAME}/"
-        bash 'python3 -m venv testing_venv'
+        sh "cd ${JENKINS_HOME}/workspace/${env.JOB_NAME}/"
+        sh 'python3 -m venv testing_venv'
 
         script {
           try {
-            bash 'source testing_venv/bin/activate'
+            sh 'source testing_venv/bin/activate'
           }
           catch (Exception e) {
-            bash '. testing_venv/bin/activate'
+            sh '. testing_venv/bin/activate'
           }
         }
 
         echo 'Install required python modules.'
-        bash "pip install -r requirements.txt --break-system-packages"
+        sh "pip install -r requirements.txt --break-system-packages"
       }
     }
 
   stage('Test') {
     steps {
       echo 'Testing...'
-      bash 'python3 -m pytest'
+      sh 'python3 -m pytest'
       }
     }
   }
@@ -42,26 +44,26 @@ pipeline {
   post {
     always {
       echo 'Install GitHub CLI'
-      bash 'apt-get install wget -y'
+      sh 'apt-get install wget -y'
 
-      bash 'mkdir -p -m 755 /etc/apt/keyrings && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+      sh 'mkdir -p -m 755 /etc/apt/keyrings && wget -qO- https://cli.github.com/packages/githubcli-archive-keyring.gpg | tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
       && chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
       && echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
       && apt update \
       && apt install gh -y'
 
       echo 'Authenticate with PAT'
-      bash "gh auth login --with-token < /var/jenkins_home/pat.txt"
+      sh "gh auth login --with-token < /var/jenkins_home/pat.txt"
     }
 
     success {
       echo 'Merging branches...'
-      bash "gh pr merge $ghprbPullId -m"
+      sh "gh pr merge $ghprbPullId -m"
     }
 
     unsuccessful {
       echo 'Close failed pull request'
-      bash "gh pr close $ghprbPullId -c 'Build Failed.'"
+      sh "gh pr close $ghprbPullId -c 'Build Failed.'"
     }
   }
 } 
