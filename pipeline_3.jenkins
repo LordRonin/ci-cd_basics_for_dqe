@@ -52,7 +52,7 @@ pipeline {
         sh "gh auth login --with-token < /var/jenkins_home/pat.txt"
 
         echo 'Merging branches...'
-        sh "gh pr merge $ghprbPullId -s"
+        sh "gh pr merge $ghprbPullId -m"
      }
    }
   }
