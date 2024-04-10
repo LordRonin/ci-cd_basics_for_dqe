@@ -55,8 +55,9 @@ pipeline {
         sh "gh pr merge $ghprbPullId -m"
      }
    }
-
-   post {
+  }
+  
+  post {
     always {
       echo 'Install GitHub CLI'
       sh 'apt-get install wget -y'
@@ -80,5 +81,4 @@ pipeline {
       sh "gh pr close $ghprbPullId -c 'Build Failed.'"
     }
    }
-  }
 } 
